@@ -31,6 +31,8 @@ import CommunityStats from "./CommunityStats";
 import WordCloud from "./WordCloud";
 import Footer from "./Footer";
 import { Separator } from "./ui/separator";
+import { Navbar } from "./Navbar";
+import { IoIosMail } from "react-icons/io";
 
 export default function User({ userId }) {
   const navigate = useNavigate();
@@ -78,8 +80,6 @@ export default function User({ userId }) {
   };
   const handleLike = async (postId) => {
     try {
-      // if (isliked) setTotalLikes((n) => n - 1);
-      // else setTotalLikes((n) => n + 1);
       const { data } = await axios.post(allPostsRoute, {
         postId,
         userId: currUserId,
@@ -97,35 +97,42 @@ export default function User({ userId }) {
   const handleClick = () => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   };
-
   return (
-    <div className="bg-[#242424] h-full">
-      <header className="sticky inset-x-0 top-0 z-50">
-        <header className="absolute z-20 w-full">
-          <UserNavbar
-            currUserId={currUserId}
-            user={user}
-            posts={posts}
-            setPosts={setPosts}
-            postOpen={postOpen}
-            setPostOpen={setPostOpen}
-          />
-        </header>
+    <div className="bg-[#242424] bg-local  h-[100vh] w-[100vw] overflow-x-hidden">
+      <header className="absolute z-20 w-full">
+        <UserNavbar
+          currUserId={currUserId}
+          user={user}
+          posts={posts}
+          setPosts={setPosts}
+          postOpen={postOpen}
+          setPostOpen={setPostOpen}
+        />
       </header>
       {user && (
         <>
-          <div className="bg-[#242424] relative isolate px-6 pt-14 lg:px-8 top-10">
+          <div className="bg-[#242424] relative isolate px-6 py-14 lg:px-8 top-10">
             <div className=" grid grid-cols-1 lg:grid-cols-2 lg:space-x-4 space-y-4 lg:space-y-0">
               <div className="grid-grid-cols-1 space-y-4 ">
-                <div className="bg-[#1E1E1E] grid grid-cols-1 space-y-4 p-8 lg:p-12 text-left text-3xl font-bold tracking-tight text-gray-200 ">
-                  {currUserId === userId ? (
-                    <h1>My Profile</h1>
-                  ) : (
-                    <h1>{user.username}'s Profile</h1>
-                  )}
+                <div className="bg-[#1E1E1E] rounded-md grid grid-cols-1 space-y-4 p-8 lg:p-12 text-left text-3xl font-bold tracking-tight text-gray-200 ">
+                  <div className="flex flex-row justify-between">
+                    {currUserId === userId ? (
+                      <h1>My Profile</h1>
+                    ) : (
+                      <h1>{user.username}'s Profile</h1>
+                    )}
+                    <a
+                      href={`mailto:${user.email}`}
+                      className="text-xl mt-2 font-bold tracking-tight text-gray-200"
+                    >
+                      <IoIosMail size={23} />
+                    </a>
+                  </div>
+
                   <Separator orientation="horizontal" className="bg-gray-600" />
-                  <p className="text-xl mt-2 font-bold tracking-tight text-gray-200">
-                    Email: {user.email}
+
+                  <p className="text-xl font-bold tracking-tight text-gray-200">
+                    Roll No.: {user.email.substring(0, 8)}
                   </p>
                   <p className="text-xl font-bold tracking-tight text-gray-200">
                     Year: {user.year}
@@ -159,9 +166,12 @@ export default function User({ userId }) {
               {posts &&
                 posts.map((post) => (
                   <li key={post._id}>
-                    <Card>
+                    <Card className="px-2">
                       <CardHeader>
-                        <CardTitle onClick={() => handleReplyClick(post._id)}>
+                        <CardTitle
+                          className="cursor-pointer"
+                          onClick={() => handleReplyClick(post._id)}
+                        >
                           {" "}
                           {post.topic}
                         </CardTitle>
@@ -171,38 +181,8 @@ export default function User({ userId }) {
                           <p>{post.text}</p>
                         </ScrollArea>
                       </CardContent>
-                      <CardFooter className="grid grid-cols-3">
-                        <div className="grid grid-cols-2">
-                          <button
-                            className="hidden lg:inline-block  bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 "
-                            onClick={() => handleReplyClick(post._id)}
-                          >
-                            {" "}
-                            Reply <sub>{post.replies.length}</sub>
-                          </button>
-                          <button className="lg:hidden">
-                            {" "}
-                            <sub>{post.replies.length}</sub>
-                            <BiMessageAdd
-                              onClick={() => handleReplyClick(post._id)}
-                            />
-                          </button>
-                          {post.imageUrl && (
-                            <HoverCard>
-                              <HoverCardTrigger>
-                                <MdAttachFile size={23} />
-                              </HoverCardTrigger>
-                              <HoverCardContent>
-                                <img
-                                  src={`${post.imageUrl}`}
-                                  alt="image"
-                                  className="h-[150px] w-[150px] mx-auto"
-                                />
-                              </HoverCardContent>
-                            </HoverCard>
-                          )}
-                        </div>
-                        <div>
+                      <CardFooter className="flex flex-row justify-between">
+                        <div className="w-[50%] grid grid-cols-2">
                           {post.likes.indexOf(currUserId) === -1 ? (
                             <>
                               <button
@@ -211,9 +191,13 @@ export default function User({ userId }) {
                                   setTotalLikes((n) => n + 1);
                                 }}
                               >
-                                <FaRegHeart size={23} color="red" />
+                                <FaRegHeart
+                                  className="inline"
+                                  size={23}
+                                  color="red"
+                                />
+                                <sub> {post.likes.length}</sub>
                               </button>
-                              <p className="inline"> {post.likes.length}</p>
                             </>
                           ) : (
                             <>
@@ -223,15 +207,43 @@ export default function User({ userId }) {
                                   setTotalLikes((n) => n - 1);
                                 }}
                               >
-                                <FaHeart size={23} color="red" />
+                                <FaHeart
+                                  className="inline"
+                                  size={23}
+                                  color="red"
+                                />
+                                <sub> {post.likes.length}</sub>
                               </button>
-                              <p className="inline"> {post.likes.length}</p>
                             </>
                           )}
+                          <button>
+                            {" "}
+                            <BiMessageAdd
+                              className="inline"
+                              size={23}
+                              onClick={() => handleReplyClick(post._id)}
+                            />
+                            <sub>{post.replies.length}</sub>
+                          </button>
                         </div>
 
-                        <div className="post-time">
-                          <p>{new Date(post.createdAt).toLocaleString()}</p>
+                        {post.imageUrl && (
+                          <HoverCard>
+                            <HoverCardTrigger>
+                              <MdAttachFile size={23} />
+                            </HoverCardTrigger>
+                            <HoverCardContent>
+                              <img
+                                src={`${post.imageUrl}`}
+                                alt="image"
+                                className="h-[150px] w-[150px] mx-auto"
+                              />
+                            </HoverCardContent>
+                          </HoverCard>
+                        )}
+
+                        <div className="text-sm text-gray-500 post-time">
+                          {new Date(post.createdAt).toLocaleString()}
                         </div>
                       </CardFooter>
                     </Card>
@@ -244,6 +256,7 @@ export default function User({ userId }) {
         </>
       )}
       {/* <Footer /> */}
+      <ToastContainer />
     </div>
   );
 }

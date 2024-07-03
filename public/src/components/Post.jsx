@@ -29,12 +29,25 @@ import TextTransition, { presets } from "react-text-transition";
 import { Navbar } from "./Navbar";
 import Footer from "./Footer";
 
+// onClick={() =>
+// console.log({
+//   posts,
+//   setPosts,
+//   currUserId,
+//   currUsername,
+//   postOpen,
+//   setPostOpen,
+// })
+// }
+
 export default function Post() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [currUserId, setCurrUserId] = useState(null);
   const [currUsername, setCurrUsername] = useState(null);
   // const [isliked, setisliked] = useState(false);
+  const [postOpen, setPostOpen] = useState(false);
+
   const toastOptions = {
     position: "bottom-right",
     autoClose: 4000,
@@ -96,7 +109,6 @@ export default function Post() {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const [postOpen, setPostOpen] = useState(false);
   const TEXTS = ["Talking", "Asking", "Sharing", "Connecting"];
   const [index, setIndex] = useState(0);
   useEffect(() => {
@@ -117,8 +129,6 @@ export default function Post() {
               currUsername={currUsername}
               posts={posts}
               setPosts={setPosts}
-              postOpen={postOpen}
-              setPostOpen={setPostOpen}
             />
           </header>
 
@@ -195,13 +205,17 @@ export default function Post() {
                 {posts &&
                   posts.map((post) => (
                     <li key={post._id}>
-                      <Card className="bg-gray-100">
+                      <Card className="bg-gray-100 text-left px-2">
                         <CardHeader>
-                          <CardTitle onClick={() => handleReplyClick(post._id)}>
+                          <CardTitle
+                            className="cursor-pointer"
+                            onClick={() => handleReplyClick(post._id)}
+                          >
                             {" "}
                             {post.topic}
                           </CardTitle>
                           <CardDescription
+                            className="cursor-pointer"
                             onClick={() => handleUsernameClick(post.userId._id)}
                           >
                             {post.username}
@@ -212,56 +226,61 @@ export default function Post() {
                             <p>{post.text}</p>
                           </ScrollArea>
                         </CardContent>
-                        <CardFooter className="grid grid-cols-3">
-                          <div className="grid grid-cols-2">
-                            <button
-                              className="hidden lg:inline-block  bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 "
-                              onClick={() => handleReplyClick(post._id)}
-                            >
-                              {" "}
-                              Reply <sub>{post.replies.length}</sub>
-                            </button>
-                            <button className="lg:hidden">
-                              {" "}
-                              <sub>{post.replies.length}</sub>
-                              <BiMessageAdd
-                                onClick={() => handleReplyClick(post._id)}
-                              />
-                            </button>
-                            {post.imageUrl && (
-                              <HoverCard>
-                                <HoverCardTrigger>
-                                  <MdAttachFile size={23} />
-                                </HoverCardTrigger>
-                                <HoverCardContent>
-                                  <img
-                                    src={`${post.imageUrl}`}
-                                    alt="image"
-                                    className="h-[150px] w-[150px] mx-auto"
-                                  />
-                                </HoverCardContent>
-                              </HoverCard>
-                            )}
-                          </div>
-                          <div>
+                        <CardFooter className="w-full flex flex-row justify-between">
+                          <div className="w-[50%] grid grid-cols-2">
                             {post.likes.indexOf(currUserId) === -1 ? (
                               <>
                                 <button onClick={() => handleLike(post._id)}>
-                                  <FaRegHeart size={23} color="red" />
+                                  <FaRegHeart
+                                    className="inline"
+                                    size={23}
+                                    color="red"
+                                  />
+                                  <sub>{post.likes.length}</sub>
                                 </button>
-                                <p className="inline"> {post.likes.length}</p>
                               </>
                             ) : (
                               <>
                                 <button onClick={() => handleLike(post._id)}>
-                                  <FaHeart size={23} color="red" />
+                                  <FaHeart
+                                    size={23}
+                                    className="inline"
+                                    color="red"
+                                  />
+                                  <sub>{post.likes.length}</sub>
                                 </button>
-                                <p className="inline"> {post.likes.length}</p>
                               </>
                             )}
+
+                            <button>
+                              <BiMessageAdd
+                                className="inline"
+                                size={23}
+                                onClick={() => handleReplyClick(post._id)}
+                              />
+                              <sub>{post.replies.length}</sub>
+                            </button>
                           </div>
 
-                          <div className="post-time">
+                          {post.imageUrl && (
+                            <HoverCard>
+                              <HoverCardTrigger>
+                                <MdAttachFile
+                                  className="cursor-pointer"
+                                  size={23}
+                                />
+                              </HoverCardTrigger>
+                              <HoverCardContent>
+                                <img
+                                  src={`${post.imageUrl}`}
+                                  alt="image"
+                                  className="h-[150px] w-[150px] mx-auto"
+                                />
+                              </HoverCardContent>
+                            </HoverCard>
+                          )}
+
+                          <div className="justify-self-end text-sm text-gray-500 post-time">
                             <p>{new Date(post.createdAt).toLocaleString()}</p>
                           </div>
                         </CardFooter>
