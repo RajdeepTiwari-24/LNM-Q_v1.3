@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { allPostsRoute } from "../utils/APIRoutes";
-import Logout from "./Logout";
-import Sorting from "./Sorting";
+import { allPostsRoute, getUserRoute } from "../utils/APIRoutes";
 import axios from "axios";
-import { getUserRoute } from "../utils/APIRoutes";
 import { useNavigate, Link } from "react-router-dom";
 import "../css/post.css";
-import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import img1 from "../assets/41656138_327153188042489_2142840811958576807_n.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -17,21 +11,22 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { ScrollArea } from "./ui/scroll-area";
+} from "../ui/card";
+import { ScrollArea } from "../ui/scroll-area";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { MdAttachFile } from "react-icons/md";
 import { BiMessageAdd } from "react-icons/bi";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
 import { useRef } from "react";
-import logo from "../assets/Removal-689.png";
-import { UserNavbar } from "./Navbar";
+import { UserNavbar } from "./Navbars/UserNavbar";
 import CommunityStats from "./CommunityStats";
 import WordCloud from "./WordCloud";
-import Footer from "./Footer";
-import { Separator } from "./ui/separator";
-import { Navbar } from "./Navbar";
+import { Separator } from "../ui/separator";
 import { IoIosMail } from "react-icons/io";
 
 export default function User({ userId }) {

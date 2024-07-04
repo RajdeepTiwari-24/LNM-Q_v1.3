@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 const CommunityStats = ({ posts, totalLikes }) => {
   return (
     <div className="grid grid-cols-1 space-y-2 text-left p-8 lg:px-12 rounded-md text-gray-200 bg-[#1E1E1E]">

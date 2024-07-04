@@ -12,8 +12,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./ui/drawer";
-import { ComboboxDemo } from "./ui/combobox";
+} from "../ui/drawer";
+import { ComboboxDemo } from "../ui/combobox";
 
 export default function Filter({ setPosts }) {
   const [searchCriteria, setSearchCriteria] = useState("Empty");

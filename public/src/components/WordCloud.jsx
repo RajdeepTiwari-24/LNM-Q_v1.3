@@ -2,7 +2,7 @@ import React from "react";
 import Wordcloud from "@visx/wordcloud/lib/Wordcloud";
 import { Text } from "@visx/text";
 import { scaleLog } from "@visx/scale";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 
 const WordCloud = ({ posts }) => {
   const words = wordFreq(posts);

@@ -4,7 +4,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 
 export default function Sorting({ posts, setPosts, username }) {
   const [toggleposts, settoggleposts] = useState(false);

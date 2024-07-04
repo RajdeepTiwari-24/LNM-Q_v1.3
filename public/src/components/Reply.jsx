@@ -5,7 +5,7 @@ import axios from "axios";
 import "../css/reply.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { NavReplyDialog } from "../components/Dialog";
+import { ReplyDialog } from "./Dialogs/ReplyDialog";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import {
@@ -15,9 +15,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "../ui/card";
 import { BiMessageAdd } from "react-icons/bi";
-import { ReplyNavbar } from "./Navbar";
+import { ReplyNavbar } from "./Navbars/ReplyNavbar";
 import { BsArrowReturnRight } from "react-icons/bs";
 import { BiTrash } from "react-icons/bi";
 
@@ -91,8 +91,8 @@ export default function Reply({ postId }) {
   if (!post) {
     return <>Loading...</>;
   }
-  console.log(currUserId);
-  console.log(post);
+  // console.log(currUserId);
+  // console.log(post);
 
   return (
     <>
@@ -169,7 +169,7 @@ export default function Reply({ postId }) {
                       <BiMessageAdd className="inline" size={23} />
                       <sub>{post.replies.length}</sub>
                     </button>
-                    <NavReplyDialog
+                    <ReplyDialog
                       postId={postId}
                       setpost={setpost}
                       currUserId={currUserId}

@@ -1,12 +1,8 @@
 import axios from "axios";
-import { allPostsRoute } from "../utils/APIRoutes";
+import { allPostsRoute } from "../../utils/APIRoutes";
 import { useNavigate } from "react-router-dom";
 import { React, useState, useEffect } from "react";
-import "../css/post.css";
-import img1 from "../assets/img1.png";
-import img2 from "../assets/img2.png";
-import img3 from "../assets/garfield-gif-4-unscreen.gif";
-import { NavPostDialog } from "../components/Dialog";
+import "../../css/post.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -16,37 +12,26 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { ScrollArea } from "./ui/scroll-area";
+} from "../../ui/card";
+import { ScrollArea } from "../../ui/scroll-area";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { MdAttachFile } from "react-icons/md";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
-import { useRef } from "react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../../ui/hover-card";
 import { BiMessageAdd } from "react-icons/bi";
-import logo_bg from "../assets/logo-bg-2.gif";
-import TextTransition, { presets } from "react-text-transition";
-import { Navbar } from "./Navbar";
-import Footer from "./Footer";
-
-// onClick={() =>
-// console.log({
-//   posts,
-//   setPosts,
-//   currUserId,
-//   currUsername,
-//   postOpen,
-//   setPostOpen,
-// })
-// }
+import { Navbar } from "../Navbars/Navbar";
+import Footer from "../Footer";
+import Hero from "./Hero";
 
 export default function Post() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [currUserId, setCurrUserId] = useState(null);
   const [currUsername, setCurrUsername] = useState(null);
-  // const [isliked, setisliked] = useState(false);
-  const [postOpen, setPostOpen] = useState(false);
 
   const toastOptions = {
     position: "bottom-right",
@@ -88,7 +73,6 @@ export default function Post() {
       setPosts(
         posts.map((p) => (p._id === postId ? { ...p, likes: data.likes } : p))
       );
-      // setisliked(!isliked);
     } catch (error) {
       console.error(error);
       toast.error("Internal Server Error, Retry After Sometime", toastOptions);
@@ -96,28 +80,12 @@ export default function Post() {
   };
 
   const handleReplyClick = (postId) => {
-    // console.log(postId);
     navigate(`/posts/${postId}`);
   };
 
   const handleUsernameClick = (userId) => {
     navigate("/profile", { state: { userId: userId } });
   };
-
-  const ref = useRef(null);
-  const handleClick = () => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const TEXTS = ["Talking", "Asking", "Sharing", "Connecting"];
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    const intervalId = setInterval(
-      () => setIndex((index) => index + 1),
-      3000 // every 3 seconds
-    );
-    return () => clearTimeout(intervalId);
-  }, []);
 
   return (
     <>
@@ -132,76 +100,18 @@ export default function Post() {
             />
           </header>
 
-          <div className=" grid grid-cols-1 relative isolate px-6 lg:px-8 snap-child">
+          <div className=" grid grid-cols-1 relative isolate px-6 lg:px-8">
             <div className="content relative ">
-              {/* <img
-                src={img1}
-                alt="Placeholder"
-                className="layer hidden lg:block -z-20 my-auto"
-              /> */}
-
-              <div className=" layer mx-auto max-w-2xl h-[100vh]  z-50 lg:relative">
-                <div className=" text-center grid grid-cols-1  justify-center">
-                  <div className="mt-[30vh] lg:mt-40  relative  mx-auto rounded-lg ">
-                    <img
-                      src={logo_bg}
-                      className=" rounded-lg shadow-2xl lg:h-[40vh] lg:w-auto"
-                    />
-                    <h1 className="w-full absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 mix-blend-difference group font-thunder tracking-wide text-8xl text-transparent bg-clip-text bg-white ">
-                      LNM-
-                      <h1 className="font-thunderit tracking-wide text-8xl  text-transparent inline-block bg-clip-text pr-3 bg-white">
-                        Q
-                      </h1>
-                      .
-                    </h1>{" "}
-                  </div>
-                  <h1 className="font-bold text-3xl lg:text-6xl text-white mt-8 flex flex-row gap-2 lg:gap-4 ml-[25%] ">
-                    Get
-                    <TextTransition springConfig={presets.wobbly}>
-                      {TEXTS[index % TEXTS.length]}
-                    </TextTransition>
-                  </h1>
-
-                  <br />
-                  {/* <PostDialog
-                    posts={posts}
-                    setPosts={setPosts}
-                    currUserId={currUserId}
-                    currUsername={currUsername}
-                  /> */}
-                  <button
-                    className="bg-[#303030] text-gray-100 border-1 p-2 px-8 lg:px-24 rounded-full  shadow-md border-gray-200 mx-auto z-2 "
-                    onClick={() => setPostOpen(true)}
-                  >
-                    What do you want to ask or share?
-                  </button>
-                  <NavPostDialog
-                    posts={posts}
-                    setPosts={setPosts}
-                    currUserId={currUserId}
-                    currUsername={currUsername}
-                    postOpen={postOpen}
-                    setPostOpen={setPostOpen}
-                  />
-                  <div className="mt-10 flex items-center justify-center gap-x-6 ">
-                    <button
-                      onClick={handleClick}
-                      className="text-md font-semibold leading-6 text-gray-200"
-                    >
-                      All Posts{" "}
-                      <span className="text-blue-400" aria-hidden="true">
-                        →
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <Hero
+                posts={posts}
+                setPosts={setPosts}
+                currUserId={currUserId}
+                currUsername={currUsername}
+              />
             </div>
+
             <section>
-              <ul
-                ref={ref}
-                className="z-100 lg:grid lg:grid-cols-2 lg:gap-8 scroll-mt-24"
-              >
+              <ul className="z-100 lg:grid lg:grid-cols-2 lg:gap-8 ">
                 {posts &&
                   posts.map((post) => (
                     <li key={post._id}>
@@ -295,6 +205,7 @@ export default function Post() {
           <Footer />
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }
