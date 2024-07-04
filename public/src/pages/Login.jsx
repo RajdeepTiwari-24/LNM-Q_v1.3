@@ -18,17 +18,17 @@ export default function Login() {
   useEffect(() => {
     const deleteUnverified = async () => {
       try {
-        localStorage.removeItem('verificationEmail');
+        localStorage.removeItem("verificationEmail");
         const { data } = await axios.post(deleteUnverifiedRoute);
-        if (data.status === false){
-          toast.error(data.msg,toastOptions);
+        if (data.status === false) {
+          toast.error(data.msg, toastOptions);
         }
       } catch (error) {
-        toast.error('Error deleting unverified email:', toastOptions);
+        toast.error("Error deleting unverified email:", toastOptions);
       }
     };
-    deleteUnverified(); 
-  }, []); 
+    deleteUnverified();
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("USER")) {
@@ -40,10 +40,10 @@ export default function Login() {
     const email = event.target.elements.email.value;
     const password = event.target.elements.password.value;
     if (email === "") {
-      toast.error("Email is required.",toastOptions);
+      toast.error("Email is required.", toastOptions);
       return false;
     } else if (password === "") {
-      toast.error("Password is required.",toastOptions);
+      toast.error("Password is required.", toastOptions);
       return false;
     }
     return true;
@@ -59,7 +59,7 @@ export default function Login() {
         password,
       });
       if (data.status === false) {
-        toast.error(data.msg,toastOptions);
+        toast.error(data.msg, toastOptions);
       }
       if (data.status === true) {
         localStorage.setItem("USER", JSON.stringify(data.user));
@@ -70,7 +70,7 @@ export default function Login() {
 
   return (
     <>
-      <div className=" flex items-center justify-center min-h-screen bg-[url('https://images.unsplash.com/photo-1596468138838-0f34c2d0773b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover">
+      <div className=" flex items-center justify-center min-h-screen bg-circuit bg-[#242424]">
         <div className="z-1 max-w-md mx-auto bg-[#F8E7D5] rounded-xl shadow-xl border border-gray-300 overflow-hidden md:max-w-2xl">
           <div className="md:grid md:grid-cols-2">
             <div className="md:shrink-0">
@@ -129,7 +129,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }

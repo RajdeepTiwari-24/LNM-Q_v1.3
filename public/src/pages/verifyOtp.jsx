@@ -56,7 +56,7 @@ const Verify = () => {
 
   return (
     <>
-      <div className=" flex items-center justify-center min-h-screen bg-[url('https://images.unsplash.com/photo-1596468138838-0f34c2d0773b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover">
+      <div className=" flex items-center justify-center min-h-screen bg-circuit bg-[#242424]">
         <div>
           <Card>
             <CardHeader>

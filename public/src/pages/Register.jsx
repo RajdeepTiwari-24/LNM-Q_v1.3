@@ -19,17 +19,20 @@ export default function Register() {
   useEffect(() => {
     const deleteUnverified = async () => {
       try {
-        localStorage.removeItem('verificationEmail');
+        localStorage.removeItem("verificationEmail");
         const { data } = await axios.post(deleteUnverifiedRoute);
         if (data.status === false) {
-          toast.error(data.msg,toastOptions);
+          toast.error(data.msg, toastOptions);
         }
       } catch (error) {
-        toast.error('Internal Server Error, Retry After Sometime',toastOptions);
+        toast.error(
+          "Internal Server Error, Retry After Sometime",
+          toastOptions
+        );
       }
     };
-    deleteUnverified(); 
-  }, []); 
+    deleteUnverified();
+  }, []);
 
   useEffect(() => {
     if (localStorage.getItem("USER")) {
@@ -43,19 +46,27 @@ export default function Register() {
     const password = event.target.elements.password.value;
     const confirmPassword = event.target.elements.confirmPassword.value;
     if (password !== confirmPassword) {
-      toast.error("Password and confirm password should be same.",toastOptions);
+      toast.error(
+        "Password and confirm password should be same.",
+        toastOptions
+      );
       return false;
-    } 
-    else if (username.length < 3) {
-      toast.error("Username should be greater than 3 characters.",toastOptions);
+    } else if (username.length < 3) {
+      toast.error(
+        "Username should be greater than 3 characters.",
+        toastOptions
+      );
       return false;
     } else if (email === "") {
-      toast.error("Email is required.",toastOptions);
+      toast.error("Email is required.", toastOptions);
       return false;
-    }else if (password.length < 5) {
-      toast.error("Password should be equal or greater than 5 characters.",toastOptions);
+    } else if (password.length < 5) {
+      toast.error(
+        "Password should be equal or greater than 5 characters.",
+        toastOptions
+      );
       return false;
-    } 
+    }
     return true;
   };
 
@@ -73,7 +84,7 @@ export default function Register() {
       });
 
       if (data.status === false) {
-        toast.error(data.msg,toastOptions);
+        toast.error(data.msg, toastOptions);
       }
       if (data.status === true) {
         localStorage.setItem("verificationEmail", email);
@@ -84,7 +95,7 @@ export default function Register() {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen bg-[url('https://images.unsplash.com/photo-1596468138838-0f34c2d0773b?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-fixed">
+      <div className="flex items-center justify-center min-h-screen bg-circuit bg-[#242424]">
         <div className=" max-w-md mx-auto bg-[#F8E7D5] rounded-xl shadow-xl border border-gray-300 overflow-hidden md:max-w-2xl">
           <div className="md:grid md:grid-cols-2">
             <div className="md:shrink-0">
@@ -149,7 +160,7 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }
