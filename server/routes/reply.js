@@ -26,7 +26,7 @@ router.post("/addreply", async (req, res, next) => {
       const user = await User.findOne({_id:userWhoPostedId});
       const email = user.email;
       post.replies.reverse();
-      const link = `http://localhost:3000/posts/${postId}`;
+      const link = `https://lnm-q-v1-3.vercel.app/posts/${postId}`;
       const msg = `
       <html>
       <body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; background-color: #f4f4f4; padding: 20px;">
