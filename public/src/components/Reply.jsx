@@ -73,7 +73,8 @@ export default function Reply({ postId }) {
 
   const handleLike = async (postId) => {
     try {
-      const { data } = await axios.post(`${allPostsRoute}/${postId}`, {
+      const { data } = await axios.post(allPostsRoute, {
+        postId,
         userId: currUserId,
       });
       const updatedPost = { ...post, likes: data.likes };
