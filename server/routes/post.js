@@ -13,10 +13,8 @@ const singleUpload = multer({ storage }).single("file");
 
 router.get("/allposts", async (req, res, next) => {
   try {
-    //console.log('aaya');
     const allPosts = await Post.find().populate("userId");
     allPosts.reverse();
-    //console.log(allPosts);
     return res.status(200).json(allPosts);
   } catch (ex) {
     next(ex);
@@ -81,7 +79,6 @@ router.post("/allposts/:postId", async (req, res, next) => {
 
 router.post("/addpost", async (req, res, next) => {
   try {
-    //console.log("Not upload image");
     const username = req.body.currusername;
     const userId = req.body.currUserId;
     const { text, topic } = req.body;
@@ -106,7 +103,6 @@ router.post("/addpost", async (req, res, next) => {
 
 router.post("/uploadpost", singleUpload, async (req, res, next) => {
   try {
-    // console.log("upload image");
     const username = req.body.currusername;
     const userId = req.body.currUserId;
     const { text, topic } = req.body;
@@ -146,7 +142,6 @@ router.post("/deletepost", async (req, res, next) => {
       const parts = post.imageUrl.split("/");
       const publicIdWithExtension = parts.pop();
       const publicId = publicIdWithExtension.split(".")[0];
-      //console.log(publicId);
       const deleteresult = await cloudinary.v2.uploader.destroy(publicId);
     }
     await Post.deleteOne({ _id: postId });

@@ -33,7 +33,6 @@ router.post("/forgot",async(req,res,next)=>{
             </div>
           </body>
         </html>`;
-        // console.log(link);
         await sendEmail(email, "Password Reset Request", msg);
         return res.json({status:true});
     }
@@ -48,14 +47,14 @@ router.get("/reset/:id/:token",async(req,res,next)=>{
     if(!user){
         return res.json({status:false,msg: 'User not exist'});
     }
-    console.log(JWT_SECRET);
+  //  console.log(JWT_SECRET);
     const secret = process.env.SECRET + user.password;
     try{
         const verify = jwt.verify(token, secret);
-        console.log(verify);
-        console.log(id);
-        console.log(process.env.KEY);//working
-        console.log(ENCRYPTION_KEY);//why not working 
+        // console.log(verify);
+        // console.log(id);
+        // console.log(process.env.KEY);//working
+        // console.log(ENCRYPTION_KEY);//why not working 
         const encryptedId=  crypto.AES.encrypt(id, process.env.KEY).toString();
         res.redirect(`http://localhost:3000/newpassword?data=${encodeURIComponent(encryptedId)}`);
     }catch (error){

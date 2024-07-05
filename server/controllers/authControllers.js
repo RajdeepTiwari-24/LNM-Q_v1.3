@@ -51,7 +51,6 @@ const register = async (req, res, next) => {
         year,
         branch,
       });
-      // delete user.password;
       let code = Math.floor(100000 + Math.random() * 900000);
       console.log(code);
       const OTP = await new Otp({
