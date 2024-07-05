@@ -1,5 +1,5 @@
-export const host = "https://lnm-q-v1-3.onrender.com";
-// export const host = "http://localhost:5000";
+// export const host = "https://lnm-q-v1-3.onrender.com";
+export const host = "http://localhost:5000";
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
 export const allPostsRoute = `${host}/api/post/allposts`;

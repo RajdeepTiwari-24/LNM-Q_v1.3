@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const multer = require("multer");
 const cloudinary =require("cloudinary");
 const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/post");

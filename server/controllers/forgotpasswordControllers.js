@@ -1,10 +1,7 @@
 const User = require("../models/userModel");
 const sendEmail = require("../utils/sendEmail");
 const bcrypt = require("bcrypt");
-const crypto = require('crypto-js');
 const jwt = require("jsonwebtoken");
-const JWT_SECRET=process.env.SECRET;
-var ENCRYPTION_KEY = process.env.KEY;
 
 const forgot = async(req,res,next)=>{
     try{
