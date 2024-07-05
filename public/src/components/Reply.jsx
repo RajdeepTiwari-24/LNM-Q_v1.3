@@ -92,8 +92,6 @@ export default function Reply({ postId }) {
   if (!post) {
     return <>Loading...</>;
   }
-  // console.log(currUserId);
-  // console.log(post);
 
   return (
     <>
@@ -113,7 +111,6 @@ export default function Reply({ postId }) {
           <div className="post-section relative py-28 px-8">
             {post && (
               <>
-                {/* <div className="relative isolate px-6 py-14 lg:px-8 "> */}
                 <Card className="mx-auto text-left lg:p-2 lg:max-w-[50vw] ">
                   <CardHeader>
                     <CardTitle className="text-xl lg:text-3xl font-bold">

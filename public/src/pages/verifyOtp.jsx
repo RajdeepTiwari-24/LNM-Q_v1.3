@@ -39,8 +39,6 @@ const Verify = () => {
     try {
       const email = localStorage.getItem("verificationEmail");
       const { data } = await axios.post(verifyOtp, { email, otp });
-      console.log("aagya1");
-      console.log(data.status);
       if (data.status === true) {
         toast.success("OTP Verified Successfully", toastOptions);
         localStorage.clear();
