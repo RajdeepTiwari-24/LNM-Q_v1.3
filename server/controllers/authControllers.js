@@ -52,7 +52,7 @@ const register = async (req, res, next) => {
         branch,
       });
       let code = Math.floor(100000 + Math.random() * 900000);
-      console.log(code);
+      // console.log(code);
       const OTP = await new Otp({
         userId: user._id,
         otp: code,

@@ -56,7 +56,7 @@ export default function User({ userId }) {
           setTotalLikes((n) => n + post.likes.length);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast.error(
           "Internal Server Error, Retry After Sometime",
           toastOptions

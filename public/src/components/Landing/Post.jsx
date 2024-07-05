@@ -48,7 +48,7 @@ export default function Post() {
           setPosts(res.data);
         })
         .catch((e) => {
-          console.log(e);
+          // console.log(e);
           toast.error(
             "Internal Server Error, Retry After Sometime",
             toastOptions
