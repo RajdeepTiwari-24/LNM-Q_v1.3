@@ -127,13 +127,13 @@ export default function User({ userId }) {
                   <Separator orientation="horizontal" className="bg-gray-600" />
 
                   <p className="text-xl font-bold tracking-tight text-gray-200">
-                    Roll No.: {user.email.substring(0, 8)}
+                    Roll No.: {user.email.substring(0, 8).toUpperCase()}
                   </p>
                   <p className="text-xl font-bold tracking-tight text-gray-200">
-                    Year: {user.year}
+                    Year: {user.year.toUpperCase()}
                   </p>
                   <p className="text-xl font-bold tracking-tight text-gray-200">
-                    Branch: {user.branch}
+                    Branch: {user.branch.toUpperCase()}
                   </p>
                   <div className="mt-10 flex items-center justify-center gap-x-6 ">
                     <button
