@@ -125,7 +125,7 @@ export default function Reply({ postId }) {
                         {" "}
                         {post.username}
                       </div>
-                      <div className="text-sm lg:text-md">
+                      <div className="text-sm text-right lg:text-md">
                         {new Date(post.createdAt).toLocaleString()}
                       </div>
                     </CardDescription>
@@ -184,13 +184,13 @@ export default function Reply({ postId }) {
                       post.replies.map((reply) => (
                         <li
                           key={reply._id}
-                          className=" bg-[#1E1E1E] w-full flex flex-row gap-4 p-2 px-6"
+                          className="bg-[#1E1E1E] rounded-sm w-full flex flex-row gap-4 p-2 px-6"
                         >
                           <BsArrowReturnRight className="my-auto" />
                           <div className="flex-initial w-[90%] text-left">
-                            <div className="flex flex-row gap-6">
+                            <div className="flex flex-col lg:flex-row lg:gap-6">
                               <p
-                                className=" text-left font-bold text-xl cursor-pointer"
+                                className=" text-left font-bold text-lg lg:text-xl cursor-pointer"
                                 onClick={() =>
                                   handleUsernameClick(reply.userId)
                                 }
@@ -202,7 +202,9 @@ export default function Reply({ postId }) {
                               </p>
                             </div>
 
-                            <p className="flex-none">{reply.text}</p>
+                            <p className="text-sm lg:text-md flex-none">
+                              {reply.text}
+                            </p>
                           </div>
 
                           {(currUserId === reply.userId ||
