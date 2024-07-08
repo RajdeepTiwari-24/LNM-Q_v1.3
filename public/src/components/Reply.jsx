@@ -19,7 +19,7 @@ import {
 import { BiMessageAdd } from "react-icons/bi";
 import { ReplyNavbar } from "./Navbars/ReplyNavbar";
 import { BsArrowReturnRight } from "react-icons/bs";
-import { BiTrash } from "react-icons/bi";
+import ReplyDelete from "./Dialogs/ReplyDelete";
 
 export default function Reply({ postId }) {
   const navigate = useNavigate();
@@ -56,20 +56,6 @@ export default function Reply({ postId }) {
       setCurrUsername(username);
     }
   }, []);
-
-  const handledeletereply = async (replyId) => {
-    const { data } = await axios.post(deleteReplyRoute, {
-      postId,
-      replyId,
-    });
-    if (data.status === false) {
-      toast.error(data.msg, toastOptions);
-    }
-    if (data.status === true) {
-      toast.success(data.msg, toastOptions);
-    }
-    setpost(data.post);
-  };
 
   const handleLike = async (postId) => {
     try {
@@ -210,10 +196,10 @@ export default function Reply({ postId }) {
                           {(currUserId === reply.userId ||
                             currUserId === post.userId) && (
                             <>
-                              <BiTrash
-                                size={23}
-                                className="cursor-pointer my-auto right-3"
-                                onClick={() => handledeletereply(reply._id)}
+                              <ReplyDelete
+                                replyId={reply._id}
+                                postId={postId}
+                                setpost={setpost}
                               />
                               <br />
                             </>
