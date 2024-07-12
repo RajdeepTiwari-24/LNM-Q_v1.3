@@ -1,17 +1,16 @@
 import axios from "axios";
 import { allPostsRoute } from "../../utils/APIRoutes";
-import { useNavigate } from "react-router-dom";
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, lazy, Suspense } from "react";
 import "../../css/post.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navbar } from "../Navbars/Navbar";
 import Footer from "../Footer";
 import Hero from "./Hero";
-import PostList from "../PostList";
+
+const PostList = lazy(() => import("../PostList"));
 
 export default function Post() {
-  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [currUserId, setCurrUserId] = useState(null);
   const [currUsername, setCurrUsername] = useState(null);
@@ -70,11 +69,19 @@ export default function Post() {
           </div>
 
           <section>
-            <PostList
-              posts={posts}
-              currUserId={currUserId}
-              setPosts={setPosts}
-            />
+            <Suspense
+              fallback={
+                <p className="h-48 text-xl font-semibold text-center text-white">
+                  Loading...
+                </p>
+              }
+            >
+              <PostList
+                posts={posts}
+                currUserId={currUserId}
+                setPosts={setPosts}
+              />
+            </Suspense>
           </section>
         </div>
         <Footer />

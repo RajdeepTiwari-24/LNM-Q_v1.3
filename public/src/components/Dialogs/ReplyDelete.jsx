@@ -14,10 +14,8 @@ import { BiTrash } from "react-icons/bi";
 import axios from "axios";
 import { deleteReplyRoute } from "../../utils/APIRoutes";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 const ReplyDelete = ({ replyId, postId, setpost }) => {
-  const navigate = useNavigate();
   const toastOptions = {
     position: "bottom-right",
     autoClose: 4000,
