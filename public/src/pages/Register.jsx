@@ -3,11 +3,13 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { registerRoute, deleteUnverifiedRoute } from "../utils/APIRoutes";
 import { ToastContainer, toast } from "react-toastify";
+import ButtonLoading from "../ui/ButtonLoading";
 import "react-toastify/dist/ReactToastify.css";
 
 const im = require("../assets/im.jpg");
 
 export default function Register() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toastOptions = {
     position: "bottom-right",
@@ -71,6 +73,7 @@ export default function Register() {
   };
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
     if (handleValidation(event)) {
       const username = event.target.elements.username.value;
@@ -91,6 +94,7 @@ export default function Register() {
         navigate("/verify");
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -141,12 +145,15 @@ export default function Register() {
                     placeholder="Confirm Password"
                     name="confirmPassword"
                   />
-                  <button
-                    className="w-full p-3 bg-[#1E75D5] text-white rounded-md"
-                    type="submit"
-                  >
-                    Sign Up
-                  </button>
+                  {!loading && (
+                    <button
+                      className="w-full p-3 bg-[#1E75D5] text-white rounded-md"
+                      type="submit"
+                    >
+                      Sign Up
+                    </button>
+                  )}{" "}
+                  {loading && <ButtonLoading />}
                 </form>
 
                 <p className="text-sm text-gray-500 mt-2">
