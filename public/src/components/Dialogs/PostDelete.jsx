@@ -27,7 +27,7 @@ const PostDelete = (postId) => {
   };
 
   const handledeletepost = async () => {
-    const { data } = await axios.post(deletePostRoute, postId);
+    const { data } = await axios.delete(deletePostRoute,{ data: postId });
     if (data.status === false) {
       toast.error("Post Not Deleted", toastOptions);
     }

@@ -14,6 +14,6 @@ router.post("/addpost", addPost);
 
 router.post("/uploadpost", singleUpload, uploadImage);
 
-router.post("/deletepost", deletePost);
+router.delete("/deletepost", deletePost);
 
 module.exports = router;
