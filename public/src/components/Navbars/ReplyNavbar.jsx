@@ -9,10 +9,7 @@ import { Link } from "react-router-dom";
 import { Separator } from "../../ui/separator";
 import { BiMessageAdd } from "react-icons/bi";
 import { ReplyDialog } from "../Dialogs/ReplyDialog";
-import { BiTrash } from "react-icons/bi";
-import axios from "axios";
-import { deletePostRoute } from "../../utils/APIRoutes";
-import { toast } from "react-toastify";
+import PostDelete from "../Dialogs/PostDelete";
 
 export function ReplyNavbar({
   post,
@@ -24,35 +21,10 @@ export function ReplyNavbar({
   const [replyOpen, setReplyOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 4000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
+
   const handleUsernameClick = (userId) => {
     navigate("/profile", { state: { userId: userId } });
   };
-
-  const handledeletepost = async () => {
-    const { data } = await axios.post(deletePostRoute, {
-      postId,
-    });
-    //console.log(data.status);
-    if (data.status === false) {
-      toast.error("Post Not Deleted", toastOptions);
-    }
-    if (data.status === true) {
-      //console.log("aajana2");
-      toast.success("Post Deleted Suucessfully", toastOptions);
-    }
-    setTimeout(() => {
-      navigate("/posts");
-    }, 2000);
-  };
-  // console.log(currUserId);
-  // console.log(post);
 
   return (
     <>
@@ -92,14 +64,7 @@ export function ReplyNavbar({
           )}
           {currUserId === post.userId && (
             <>
-              <button className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 ">
-                <BiTrash
-                  size={23}
-                  className="text-gray-200"
-                  onClick={() => handledeletepost()}
-                />
-              </button>
-              <br />
+              <PostDelete postId={postId} />
             </>
           )}
         </div>

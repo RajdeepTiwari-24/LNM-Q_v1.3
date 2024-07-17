@@ -28,13 +28,13 @@ import CommunityStats from "./CommunityStats";
 import WordCloud from "./WordCloud";
 import { Separator } from "../ui/separator";
 import { IoIosMail } from "react-icons/io";
+import PostList from "./PostList";
 
 export default function User({ userId }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [currUserId, setCurrUserId] = useState(null);
-  const [isliked, setisliked] = useState(false);
   const [totalLikes, setTotalLikes] = useState(0);
   const [postOpen, setPostOpen] = useState(false);
   const toastOptions = {
@@ -70,24 +70,6 @@ export default function User({ userId }) {
     }
   }, []);
 
-  const handleReplyClick = (postId) => {
-    navigate(`/posts/${postId}`);
-  };
-  const handleLike = async (postId) => {
-    try {
-      const { data } = await axios.post(allPostsRoute, {
-        postId,
-        userId: currUserId,
-      });
-      setPosts(
-        posts.map((p) => (p._id === postId ? { ...p, likes: data.likes } : p))
-      );
-      setisliked(!isliked);
-    } catch (error) {
-      console.error(error);
-      toast.error("Internal Server Error, Retry After Sometime", toastOptions);
-    }
-  };
   const ref = useRef(null);
   const handleClick = () => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -153,104 +135,17 @@ export default function User({ userId }) {
                 <WordCloud className="bg-white" posts={posts} />
               </div>
             </div>
-
-            <ul
-              ref={ref}
-              className="z-100 lg:grid lg:grid-cols-2 gap-4 my-10 scroll-mt-24"
-            >
-              {posts &&
-                posts.map((post) => (
-                  <li key={post._id}>
-                    <Card className="px-2">
-                      <CardHeader>
-                        <CardTitle
-                          className="cursor-pointer"
-                          onClick={() => handleReplyClick(post._id)}
-                        >
-                          {" "}
-                          {post.topic}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ScrollArea className="h-36 w-full rounded-md border p-2">
-                          <p>{post.text}</p>
-                        </ScrollArea>
-                      </CardContent>
-                      <CardFooter className="flex flex-row justify-between">
-                        <div className="w-[50%] grid grid-cols-2">
-                          {post.likes.indexOf(currUserId) === -1 ? (
-                            <>
-                              <button
-                                onClick={() => {
-                                  handleLike(post._id);
-                                  setTotalLikes((n) => n + 1);
-                                }}
-                              >
-                                <FaRegHeart
-                                  className="inline"
-                                  size={23}
-                                  color="red"
-                                />
-                                <sub> {post.likes.length}</sub>
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                onClick={() => {
-                                  handleLike(post._id);
-                                  setTotalLikes((n) => n - 1);
-                                }}
-                              >
-                                <FaHeart
-                                  className="inline"
-                                  size={23}
-                                  color="red"
-                                />
-                                <sub> {post.likes.length}</sub>
-                              </button>
-                            </>
-                          )}
-                          <button>
-                            {" "}
-                            <BiMessageAdd
-                              className="inline"
-                              size={23}
-                              onClick={() => handleReplyClick(post._id)}
-                            />
-                            <sub>{post.replies.length}</sub>
-                          </button>
-                        </div>
-
-                        {post.imageUrl && (
-                          <HoverCard>
-                            <HoverCardTrigger>
-                              <MdAttachFile size={23} />
-                            </HoverCardTrigger>
-                            <HoverCardContent>
-                              <img
-                                src={`${post.imageUrl}`}
-                                alt="image"
-                                className="h-[150px] w-[150px] mx-auto"
-                              />
-                            </HoverCardContent>
-                          </HoverCard>
-                        )}
-
-                        <div className="text-sm text-gray-500 post-time">
-                          {new Date(post.createdAt).toLocaleString()}
-                        </div>
-                      </CardFooter>
-                    </Card>
-                    <br />
-                  </li>
-                ))}
-            </ul>
-            {/* </div> */}
+            <section className="my-10 scroll-mt-24" ref={ref}>
+              <PostList
+                posts={posts}
+                currUserId={currUserId}
+                setPosts={setPosts}
+                setTotalLikes={setTotalLikes}
+              />
+            </section>
           </div>
         </>
       )}
-      {/* <Footer /> */}
       <ToastContainer />
     </div>
   );

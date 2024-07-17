@@ -4,9 +4,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { loginRoute, deleteUnverifiedRoute } from "../utils/APIRoutes";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ButtonLoading from "../ui/ButtonLoading";
 const im = require("../assets/video.gif");
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const toastOptions = {
     position: "bottom-right",
@@ -50,6 +52,7 @@ export default function Login() {
   };
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
     if (validateForm(event)) {
       const email = event.target.elements.email.value;
@@ -66,6 +69,7 @@ export default function Login() {
         navigate("/posts");
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -104,12 +108,15 @@ export default function Login() {
                     placeholder="Password"
                     name="password"
                   />
-                  <button
-                    className="w-full p-3 bg-[#1E75D5] text-white rounded-md"
-                    type="submit"
-                  >
-                    Sign In
-                  </button>
+                  {!loading && (
+                    <button
+                      className="w-full p-3 bg-[#1E75D5] text-white rounded-md"
+                      type="submit"
+                    >
+                      Sign In
+                    </button>
+                  )}{" "}
+                  {loading && <ButtonLoading />}
                 </form>
 
                 <p className="text-sm text-gray-500 mt-2">

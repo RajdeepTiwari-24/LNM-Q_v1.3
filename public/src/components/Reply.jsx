@@ -19,7 +19,7 @@ import {
 import { BiMessageAdd } from "react-icons/bi";
 import { ReplyNavbar } from "./Navbars/ReplyNavbar";
 import { BsArrowReturnRight } from "react-icons/bs";
-import { BiTrash } from "react-icons/bi";
+import ReplyDelete from "./Dialogs/ReplyDelete";
 
 export default function Reply({ postId }) {
   const navigate = useNavigate();
@@ -56,20 +56,6 @@ export default function Reply({ postId }) {
       setCurrUsername(username);
     }
   }, []);
-
-  const handledeletereply = async (replyId) => {
-    const { data } = await axios.post(deleteReplyRoute, {
-      postId,
-      replyId,
-    });
-    if (data.status === false) {
-      toast.error(data.msg, toastOptions);
-    }
-    if (data.status === true) {
-      toast.success(data.msg, toastOptions);
-    }
-    setpost(data.post);
-  };
 
   const handleLike = async (postId) => {
     try {
@@ -125,7 +111,7 @@ export default function Reply({ postId }) {
                         {" "}
                         {post.username}
                       </div>
-                      <div className="text-sm lg:text-md">
+                      <div className="text-sm text-right lg:text-md">
                         {new Date(post.createdAt).toLocaleString()}
                       </div>
                     </CardDescription>
@@ -184,13 +170,13 @@ export default function Reply({ postId }) {
                       post.replies.map((reply) => (
                         <li
                           key={reply._id}
-                          className=" bg-[#1E1E1E] w-full flex flex-row gap-4 p-2 px-6"
+                          className="bg-[#1E1E1E] rounded-sm w-full flex flex-row gap-4 p-2 px-6"
                         >
                           <BsArrowReturnRight className="my-auto" />
                           <div className="flex-initial w-[90%] text-left">
-                            <div className="flex flex-row gap-6">
+                            <div className="flex flex-col lg:flex-row lg:gap-6">
                               <p
-                                className=" text-left font-bold text-xl cursor-pointer"
+                                className=" text-left font-bold text-lg lg:text-xl cursor-pointer"
                                 onClick={() =>
                                   handleUsernameClick(reply.userId)
                                 }
@@ -202,16 +188,18 @@ export default function Reply({ postId }) {
                               </p>
                             </div>
 
-                            <p className="flex-none">{reply.text}</p>
+                            <p className="text-sm lg:text-md flex-none">
+                              {reply.text}
+                            </p>
                           </div>
 
                           {(currUserId === reply.userId ||
                             currUserId === post.userId) && (
                             <>
-                              <BiTrash
-                                size={23}
-                                className="cursor-pointer my-auto right-3"
-                                onClick={() => handledeletereply(reply._id)}
+                              <ReplyDelete
+                                replyId={reply._id}
+                                postId={postId}
+                                setpost={setpost}
                               />
                               <br />
                             </>
