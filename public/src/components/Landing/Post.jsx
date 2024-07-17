@@ -25,7 +25,7 @@ export default function Post() {
   useEffect(() => {
     const GetPosts = async () => {
       axios
-        .get(`${allPostsRoute}`)
+        .get(allPostsRoute)
         .then((res) => {
           setPosts(res.data);
         })
