@@ -22,7 +22,7 @@ export default function Register() {
     const deleteUnverified = async () => {
       try {
         localStorage.removeItem("verificationEmail");
-        const { data } = await axios.post(deleteUnverifiedRoute);
+        const { data } = await axios.delete(deleteUnverifiedRoute);
         if (data.status === false) {
           toast.error(data.msg, toastOptions);
         }

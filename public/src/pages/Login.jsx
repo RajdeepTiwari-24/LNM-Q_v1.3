@@ -21,7 +21,7 @@ export default function Login() {
     const deleteUnverified = async () => {
       try {
         localStorage.removeItem("verificationEmail");
-        const { data } = await axios.post(deleteUnverifiedRoute);
+        const { data } = await axios.delete(deleteUnverifiedRoute);
         if (data.status === false) {
           toast.error(data.msg, toastOptions);
         }
@@ -86,7 +86,7 @@ export default function Login() {
             </div>
             <div className="p-8">
               <div className="p-8">
-                <h2 className="font-dongpora text-6xl text-[#F1853B]">
+                <h2 className="font-dongpora text-5xl text-[#F1853B]">
                   Sign in
                 </h2>
                 <p className="text-gray-500">Welcome to LNM-Q</p>

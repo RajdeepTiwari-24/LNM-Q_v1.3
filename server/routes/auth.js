@@ -7,6 +7,6 @@ router.post("/register", register);
 
 router.post("/verify", verify);
 
-router.post("/deleteunverified",deleteunverified);
+router.delete("/deleteunverified",deleteunverified);
 
 module.exports = router;
