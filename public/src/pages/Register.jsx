@@ -55,7 +55,7 @@ export default function Register() {
       return false;
     } else if (username.length < 3) {
       toast.error(
-        "Username should be greater than 3 characters.",
+        "Username should be equal or greater than 3 characters.",
         toastOptions
       );
       return false;
@@ -79,7 +79,7 @@ export default function Register() {
       const username = event.target.elements.username.value;
       const email = event.target.elements.email.value;
       const password = event.target.elements.password.value;
-      const confirmPassword = event.target.elements.confirmPassword.value;
+      // const confirmPassword = event.target.elements.confirmPassword.value;
       const { data } = await axios.post(registerRoute, {
         username,
         email,
@@ -111,7 +111,7 @@ export default function Register() {
             </div>
             <div className="p-8">
               <div className="p-8">
-                <h2 className="font-dongpora text-6xl text-[#F1853B]">
+                <h2 className="font-dongpora text-5xl text-[#F1853B]">
                   Sign Up
                 </h2>
                 <p className="text-lg py-1 text-gray-500">Welcome to LNM-Q</p>

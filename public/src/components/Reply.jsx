@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { allPostsRoute, deleteReplyRoute } from "../utils/APIRoutes";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "../css/reply.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReplyDialog } from "./Dialogs/ReplyDialog";

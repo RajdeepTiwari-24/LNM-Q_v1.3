@@ -86,9 +86,9 @@ export default function Login() {
             </div>
             <div className="p-8">
               <div className="p-8">
-                <h2 className="font-dongpora text-5xl text-[#F1853B]">
+                <h1 className="font-dongpora text-5xl text-[#F1853B]">
                   Sign in
-                </h2>
+                </h1>
                 <p className="text-gray-500">Welcome to LNM-Q</p>
                 <form
                   className="space-y-5 mt-5"
