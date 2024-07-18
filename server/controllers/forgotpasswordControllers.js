@@ -1,7 +1,10 @@
 const User = require("../models/userModel");
 const sendEmail = require("../utils/sendEmail");
 const bcrypt = require("bcrypt");
+const crypto = require('crypto-js');
 const jwt = require("jsonwebtoken");
+// const host = "http://localhost:5000";
+const host = "https://lnm-q-v1-3.onrender.com"
 
 const forgot = async(req,res,next)=>{
     try{
@@ -14,7 +17,7 @@ const forgot = async(req,res,next)=>{
         const token = jwt.sign({ email: user.email, id: user._id }, secret, {
             expiresIn: "5m",
         });
-        const link = `https://lnm-q-v1-3.onrender.com/api/password/reset/${user._id}/${token}`;
+        const link = `${host}/api/password/reset/${user._id}/${token}`;
         const msg = `
         <html>
           <body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6;">
@@ -39,19 +42,27 @@ const forgot = async(req,res,next)=>{
 };
 
 const verifyJwt = async(req,res,next) =>{
-    const {id,token}=req.params;
-    const user = await User.findOne({_id:id});
-    if(!user){
-        return res.json({status:false,msg: 'User not exist'});
-    }
-    console.log(JWT_SECRET);
-    const secret = process.env.SECRET + user.password;
     try{
+        const {id,token}=req.params;
+        // console.log(yahan1);
+        // console.log(id);
+        // console.log(yahan1);
+        // console.log(token);
+        // console.log("yahan1");
+        const user = await User.findOne({_id:id});
+        if(!user){
+            // console.log("yahan2");
+            return res.json({status:false,msg: 'User not exist'});
+        }
+        // console.log(JWT_SECRET);
+        // console.log("yahan3");
+        const secret = process.env.SECRET + user.password;
+        // console.log(secret);
         const verify = jwt.verify(token, secret);
         const encryptedId=  crypto.AES.encrypt(id, process.env.KEY).toString();
         res.redirect(`https://lnm-q-v1-3.vercel.app/newpassword?data=${encodeURIComponent(encryptedId)}`);
     }catch (error){
-        return res.json({status:false,msg: 'Servers having huge traffic, Try again later.'});
+        return res.json({status:false,msg: 'Failed to Modify Password'});
     }    
 };
 
