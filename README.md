@@ -71,4 +71,4 @@ Distributed under the MIT License. See [`LICENSE`][license-url] for more informa
 [issues-shield]: https://img.shields.io/github/issues/Tushars815/LNM-Q_v1.3.svg?style=for-the-badge
 [issues-url]: https://github.com/Tushars815/LNM-Q_v1.3/issues
 [license-shield]: https://img.shields.io/github/license/Tushars815/LNM-Q_v1.3.svg?style=for-the-badge
-[license-url]: https://github.com/Tushars815/LNM-Q_v1.3/blob/main/LICENSE.txt
+[license-url]: https://github.com/Tushars815/LNM-Q_v1.3/blob/main/LICENSE.md
