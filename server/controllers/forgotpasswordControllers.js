@@ -14,7 +14,7 @@ const forgot = async(req,res,next)=>{
         const token = jwt.sign({ email: user.email, id: user._id }, secret, {
             expiresIn: "5m",
         });
-        const link = `http://localhost:5000/api/password/reset/${user._id}/${token}`;
+        const link = `https://lnm-q-v1-3.onrender.com/api/password/reset/${user._id}/${token}`;
         const msg = `
         <html>
           <body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6;">
@@ -49,7 +49,7 @@ const verifyJwt = async(req,res,next)=>{
         const token = jwt.sign({ email: user.email, id: user._id }, secret, {
             expiresIn: "5m",
         });
-        const link = `http://localhost:5000/api/password/reset/${user._id}/${token}`;
+        const link = `https://lnm-q-v1-3.onrender.com/api/password/reset/${user._id}/${token}`;
         const msg = `
         <html>
           <body style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6;">

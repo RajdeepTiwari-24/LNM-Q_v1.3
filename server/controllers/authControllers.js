@@ -79,7 +79,7 @@ const register = async (req, res, next) => {
       delete userObject.replies;
       return res.json({ status: true, user: userObject });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return res.json({ msg: "Problem with OTP", status: false });
     }
 };
