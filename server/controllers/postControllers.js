@@ -59,13 +59,14 @@ const addPost = async (req, res, next) => {
     const username = req.body.currusername;
     const userId = req.body.currUserId;
     const { text, topic } = req.body;
-    var sentimentResult = sentiment.analyze(`${topic}:${text}`);
-    if (sentimentResult.comparative < 0) {
-      return res.json({ status: false, sentimentResult });
-    }
+
     const user = await User.findOne({ _id: userId });
     if (!user) {
       return res.status(404).json({ status: false, msg: "User not found" });
+    }
+    var sentimentResult = sentiment.analyze(`${topic}:${text}`);
+    if (sentimentResult.comparative < 0) {
+      return res.json({ status: false, sentimentResult });
     }
     const post = await Post.create({
       text,
@@ -122,8 +123,13 @@ const uploadImage = async (req, res, next) => {
     const fileuri = getDataUri(file);
     const mycloud = await cloudinary.v2.uploader.upload(fileuri.content);
     const user = await User.findOne({ _id: userId });
+
     if (!user) {
       return res.status(404).json({ status: false, msg: "User not found" });
+    }
+    var sentimentResult = sentiment.analyze(`${topic}:${text}`);
+    if (sentimentResult.comparative < 0) {
+      return res.json({ status: false, sentimentResult });
     }
     const post = await Post.create({
       text,
