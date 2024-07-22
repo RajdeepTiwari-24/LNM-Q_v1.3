@@ -1,11 +1,23 @@
 import React, { Fragment, useRef, useState, useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+// import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { addPostRoute, addPostUpload } from "../../utils/APIRoutes";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdAddCircleOutline } from "react-icons/md";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "../../ui/dialog";
+import { Input } from "../../ui/input";
+import { Textarea } from "../../ui/textarea";
+import { Button } from "../../ui/button";
 
 export function PostDialog({
   posts,
@@ -17,7 +29,7 @@ export function PostDialog({
   setWarning,
 }) {
   const [file, setFile] = useState(null);
-  const cancelButtonRef = useRef(null);
+  // const cancelButtonRef = useRef(null);
   const toastOptions = {
     position: "bottom-right",
     autoClose: 4000,
@@ -71,7 +83,6 @@ export function PostDialog({
       }
       if (data.status === false && data.sentimentResult) {
         setWarning(data.sentimentResult);
-        toast.error("Explicit Content", toastOptions);
         event.target.reset();
         setPostOpen(false);
         setFile(null);
@@ -89,104 +100,40 @@ export function PostDialog({
 
   return (
     <>
-      <Transition.Root show={postOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-50"
-          initialFocus={cancelButtonRef}
-          onClose={setPostOpen}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-[#242424] bg-opacity-75 backdrop-blur-md transition-opacity" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <form action="" onSubmit={(event) => handleSubmit(event)}>
-                    <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                      <div className=" sm:flex sm:items-start">
-                        <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                          <MdAddCircleOutline
-                            className="h-6 w-6 text-[#242424]"
-                            aria-hidden="true"
-                          />
-                        </div>
-                        <div className="w-full mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left mr-8">
-                          <Dialog.Title
-                            as="h3"
-                            className="text-base font-semibold leading-6 text-gray-900"
-                          >
-                            What do you want to share or ask?
-                          </Dialog.Title>
-                          <div className="w-full flex flex-col space-y-5 mt-6 ">
-                            <input
-                              type="text"
-                              placeholder="Topic"
-                              name="topic"
-                              min="1"
-                              className="rounded-sm w-full font-semibold text-xl border-2 p-2"
-                            />
-                            <textarea
-                              placeholder="Add text here."
-                              name="text"
-                              className="rounded-sm w-full border-2 text-lg p-2"
-                              minLength={1}
-                              rows={4}
-                              // style={{ width: "100%", maxWidth: "500px" }}
-                            />
-                            <input
-                              type="file"
-                              onChange={(e) => setFile(e.target.files[0])}
-                            />
-                            <p className="text-sm">
-                              * Upload any image if you want to.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                      <button
-                        type="submit"
-                        className="inline-flex w-full justify-center rounded-md bg-[#242424] px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-opacity-75 sm:ml-3 sm:w-auto"
-                        ref={cancelButtonRef}
-                      >
-                        ADD
-                      </button>
-                      <button
-                        type="button"
-                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                        onClick={() => setPostOpen(false)}
-                        ref={cancelButtonRef}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                </Dialog.Panel>
-              </Transition.Child>
+      <Dialog open={postOpen}>
+        <DialogContent>
+          <form action="" onSubmit={(event) => handleSubmit(event)}>
+            <DialogHeader>
+              <DialogTitle className={"flex flex-row gap-4"}>
+                <MdAddCircleOutline
+                  className="h-6 w-6 text-[#242424]"
+                  aria-hidden="true"
+                />
+                What do you want to share or ask?
+              </DialogTitle>
+            </DialogHeader>
+            <div className="px-8 flex flex-col space-y-4 my-6">
+              <Input type="text" placeholder="Topic" name="topic" />
+              <Textarea placeholder="Add text here." name="text" />
+              <div>
+                <p className="text-sm">* Upload any image if you want to.</p>
+                <Input
+                  type="file"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+              </div>
             </div>
-          </div>
-        </Dialog>
-      </Transition.Root>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="secondary" onClick={() => setPostOpen(false)}>
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button type="submit">Post</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
