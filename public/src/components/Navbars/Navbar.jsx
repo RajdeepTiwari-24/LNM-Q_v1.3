@@ -32,9 +32,9 @@ export function Navbar({ currUserId, currUsername, posts, setPosts }) {
             <img className="h-10 inline-block" src={logo} alt="" />
             <h1 className="h-full my-auto font-thunder tracking-wide hidden lg:inline-block text-3xl lg:text-4xl text-white">
               LNM-
-              <h1 className="my-auto font-thunderit tracking-wide hidden lg:inline-block ">
+              <p className="my-auto font-thunderit tracking-wide hidden lg:inline-block ">
                 Q .
-              </h1>
+              </p>
             </h1>
             <Separator
               orientation="vertical"
@@ -84,12 +84,12 @@ export function Navbar({ currUserId, currUsername, posts, setPosts }) {
           >
             My Profile
           </button>
-          <button
+          <span
             href="#"
-            className="-mx-3 block rounded-lg px-3 text-base font-semibold leading-7"
+            className="-mx-3 block cursor-pointer rounded-lg px-3 text-base font-semibold leading-7"
           >
             <Logout />
-          </button>
+          </span>
         </div>
       </nav>
       <Dialog

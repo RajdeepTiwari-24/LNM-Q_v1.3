@@ -18,6 +18,7 @@ import {
 import { Input } from "../../ui/input";
 import { Textarea } from "../../ui/textarea";
 import { Button } from "../../ui/button";
+import Warning from "./Warning";
 
 export function PostDialog({
   posts,
@@ -26,10 +27,9 @@ export function PostDialog({
   currUsername,
   postOpen,
   setPostOpen,
-  setWarning,
 }) {
+  const [warning, setWarning] = useState({});
   const [file, setFile] = useState(null);
-  // const cancelButtonRef = useRef(null);
   const toastOptions = {
     position: "bottom-right",
     autoClose: 4000,
@@ -141,6 +141,9 @@ export function PostDialog({
           </form>
         </DialogContent>
       </Dialog>
+      {warning.comparative !== undefined && (
+        <Warning warning={warning} setWarning={setWarning} />
+      )}
     </>
   );
 }

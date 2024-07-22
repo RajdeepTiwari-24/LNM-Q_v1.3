@@ -3,8 +3,8 @@ const sendEmail = require("../utils/sendEmail");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto-js");
 const jwt = require("jsonwebtoken");
-const host = "http://localhost:5000";
-// const host = "https://lnm-q-v1-3.onrender.com"
+// const host = "http://localhost:5000";
+const host = "https://lnm-q-v1-3.onrender.com";
 
 const forgot = async (req, res, next) => {
   try {

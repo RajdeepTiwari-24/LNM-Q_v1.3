@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { addReplyRoute } from "../../utils/APIRoutes";
 import { toast } from "react-toastify";
@@ -14,6 +14,7 @@ import {
 } from "../../ui/dialog";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
+import Warning from "./Warning";
 
 export function ReplyDialog({
   postId,
@@ -30,6 +31,8 @@ export function ReplyDialog({
     draggable: true,
     theme: "dark",
   };
+  const [warning, setWarning] = useState({});
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const text = event.target.elements.text.value;
@@ -43,8 +46,14 @@ export function ReplyDialog({
       userId: currUserId,
       postId,
     });
-    if (data.status === false) {
+    if (data.status === false && data.msg) {
       toast.error(data.msg, toastOptions);
+    }
+    if (data.status == false && data.sentimentResult) {
+      setWarning(data.sentimentResult);
+      event.target.elements.text.value = "";
+      setReplyOpen(false);
+      return;
     }
     if (data.status === true) {
       toast.success("Reply Added Successfully", toastOptions);
@@ -82,6 +91,9 @@ export function ReplyDialog({
           </form>
         </DialogContent>
       </Dialog>
+      {warning.comparative !== undefined && (
+        <Warning warning={warning} setWarning={setWarning} />
+      )}
     </>
   );
 }
