@@ -3,8 +3,10 @@ import logo_bg from "../../assets/logo-bg-2.gif";
 import TextTransition, { presets } from "react-text-transition";
 import { PostDialog } from "../Dialogs/PostDialog";
 import { Separator } from "../../ui/separator";
+import Warning from "../Dialogs/Warning";
 
 const Hero = ({ posts, setPosts, currUserId, currUsername }) => {
+  const [warning, setWarning] = useState({});
   const TEXTS = ["Talking", "Asking", "Sharing", "Connecting"];
   const [index, setIndex] = useState(0);
   const [postOpen, setPostOpen] = useState(false);
@@ -37,7 +39,7 @@ const Hero = ({ posts, setPosts, currUserId, currUsername }) => {
               .
             </h1>
           </div>
-          <h1 className="font-bold text-3xl lg:text-6xl text-white mt-8 flex flex-row gap-2 lg:gap-4 ml-[25%] ">
+          <h1 className="relative font-bold text-3xl lg:text-6xl text-white mt-8 flex flex-row gap-2 lg:gap-4 ml-[25%] ">
             Get
             <TextTransition springConfig={presets.wobbly}>
               {TEXTS[index % TEXTS.length]}
@@ -58,7 +60,13 @@ const Hero = ({ posts, setPosts, currUserId, currUsername }) => {
             currUsername={currUsername}
             postOpen={postOpen}
             setPostOpen={setPostOpen}
+            setWarning={setWarning}
           />
+          {console.log(warning)}
+          {warning.comparative !== undefined && (
+            <Warning warning={warning} setWarning={setWarning} />
+          )}
+
           <div className="mt-10 flex items-center justify-center gap-x-6 ">
             <button
               onClick={handleClick}

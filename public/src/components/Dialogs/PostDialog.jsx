@@ -2,12 +2,8 @@ import React, { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
-import {
-  addPostRoute,
-  addPostUpload,
-  addReplyRoute,
-} from "../../utils/APIRoutes";
-import { ToastContainer, toast } from "react-toastify";
+import { addPostRoute, addPostUpload } from "../../utils/APIRoutes";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdAddCircleOutline } from "react-icons/md";
 
@@ -18,8 +14,8 @@ export function PostDialog({
   currUsername,
   postOpen,
   setPostOpen,
+  setWarning,
 }) {
-  // const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
   const cancelButtonRef = useRef(null);
   const toastOptions = {
@@ -70,8 +66,16 @@ export function PostDialog({
         currusername: currUsername,
         currUserId,
       });
-      if (data.status === false) {
+      if (data.status === false && data.msg) {
         toast.error(data.msg, toastOptions);
+      }
+      if (data.status === false && data.sentimentResult) {
+        setWarning(data.sentimentResult);
+        toast.error("Explicit Content", toastOptions);
+        event.target.reset();
+        setPostOpen(false);
+        setFile(null);
+        return;
       }
       if (data.status === true) {
         toast.success("Post Added Successfully", toastOptions);
