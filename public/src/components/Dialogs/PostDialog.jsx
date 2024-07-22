@@ -61,8 +61,15 @@ export function PostDialog({
           "Content-Type": "multipart/form-data",
         },
       });
-      if (data.status === false) {
+      if (data.status === false && data.msg) {
         toast.error(data.msg, toastOptions);
+      }
+      if (data.status === false && data.sentimentResult) {
+        setWarning(data.sentimentResult);
+        event.target.reset();
+        setPostOpen(false);
+        setFile(null);
+        return;
       }
       if (data.status === true) {
         toast.success("Post Added Successfully", toastOptions);
