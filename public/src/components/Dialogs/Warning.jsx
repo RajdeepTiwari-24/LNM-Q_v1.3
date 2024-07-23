@@ -16,10 +16,9 @@ const PrepareData = (arr) => {
 };
 
 const Warning = ({ warning, setWarning }) => {
-  console.log(warning);
   const unsafeWords = PrepareData(warning.negative);
   return (
-    <Dialog open={() => warning.comparative < 0}>
+    <Dialog open={() => warning.comparative < -0.5}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Warning!!</DialogTitle>

@@ -62,7 +62,7 @@ const addPost = async (req, res, next) => {
       return res.status(404).json({ status: false, msg: "User not found" });
     }
     var sentimentResult = sentiment.analyze(`${topic}:${text}`);
-    if (sentimentResult.comparative < 0) {
+    if (sentimentResult.comparative < -0.5) {
       return res.json({ status: false, sentimentResult });
     }
     const post = await Post.create({
@@ -73,7 +73,6 @@ const addPost = async (req, res, next) => {
     });
     user.posts.push(post._id);
     await user.save();
-    console.log(post);
     return res.json({ status: true, post });
   } catch (ex) {
     next(ex);
@@ -125,7 +124,7 @@ const uploadImage = async (req, res, next) => {
       return res.status(404).json({ status: false, msg: "User not found" });
     }
     var sentimentResult = sentiment.analyze(`${topic}:${text}`);
-    if (sentimentResult.comparative < 0) {
+    if (sentimentResult.comparative < -0.5) {
       return res.json({ status: false, sentimentResult });
     }
     const post = await Post.create({

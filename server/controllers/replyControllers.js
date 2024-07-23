@@ -12,8 +12,7 @@ const addReply = async (req, res, next) => {
     const postId = req.body.postId;
     const userId = req.body.userId;
     var sentimentResult = sentiment.analyze(text);
-    if (sentimentResult.comparative < 0) {
-      console.log(sentimentResult);
+    if (sentimentResult.comparative < -0.5) {
       return res.json({ status: false, sentimentResult });
     }
     const reply = await Reply.create({
