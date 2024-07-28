@@ -5,23 +5,6 @@ import { useNavigate, Link } from "react-router-dom";
 import "../css/post.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
-import { ScrollArea } from "../ui/scroll-area";
-import { FaRegHeart } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
-import { MdAttachFile } from "react-icons/md";
-import { BiMessageAdd } from "react-icons/bi";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
 import { useRef } from "react";
 import { UserNavbar } from "./Navbars/UserNavbar";
 import CommunityStats from "./CommunityStats";
@@ -29,9 +12,9 @@ import WordCloud from "./WordCloud";
 import { Separator } from "../ui/separator";
 import { IoIosMail } from "react-icons/io";
 import PostList from "./PostList";
+import { MutatingDots } from "react-loader-spinner";
 
 export default function User({ userId }) {
-  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [currUserId, setCurrUserId] = useState(null);
@@ -74,6 +57,27 @@ export default function User({ userId }) {
   const handleClick = () => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  if (!user) {
+    return (
+      <>
+        <div className="w-full h-[100vh] bg-[#242424] flex flex-row justify-around">
+          <MutatingDots
+            visible={true}
+            height="110"
+            width="110"
+            color="#4fa94d"
+            secondaryColor="#4fa94d"
+            radius="15"
+            ariaLabel="mutating-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className="bg-[#242424] bg-local  h-[100vh] w-[100vw] overflow-x-hidden">
       <header className="absolute z-20 w-full">

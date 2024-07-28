@@ -19,6 +19,7 @@ import { BiMessageAdd } from "react-icons/bi";
 import { ReplyNavbar } from "./Navbars/ReplyNavbar";
 import { BsArrowReturnRight } from "react-icons/bs";
 import ReplyDelete from "./Dialogs/ReplyDelete";
+import { MutatingDots } from "react-loader-spinner";
 
 export default function Reply({ postId }) {
   const navigate = useNavigate();
@@ -75,7 +76,23 @@ export default function Reply({ postId }) {
   };
 
   if (!post) {
-    return <>Loading...</>;
+    return (
+      <>
+        <div className="w-full h-[100vh] bg-[#242424] flex flex-row justify-around">
+          <MutatingDots
+            visible={true}
+            height="110"
+            width="110"
+            color="#4fa94d"
+            secondaryColor="#4fa94d"
+            radius="15"
+            ariaLabel="mutating-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      </>
+    );
   }
 
   return (

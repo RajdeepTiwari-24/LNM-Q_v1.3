@@ -7,13 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { Navbar } from "../Navbars/Navbar";
 import Footer from "../Footer";
 import Hero from "./Hero";
-
-const PostList = lazy(() => import("../PostList"));
+import PostList from "../PostList";
+// const PostList = lazy(() => import("../PostList"));
+import { MutatingDots } from "react-loader-spinner";
 
 export default function Post() {
   const [posts, setPosts] = useState([]);
   const [currUserId, setCurrUserId] = useState(null);
   const [currUsername, setCurrUsername] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const toastOptions = {
     position: "bottom-right",
@@ -28,6 +30,7 @@ export default function Post() {
         .get(allPostsRoute)
         .then((res) => {
           setPosts(res.data);
+          setLoading(false);
         })
         .catch((e) => {
           // console.log(e);
@@ -69,19 +72,35 @@ export default function Post() {
           </div>
 
           <section>
-            <Suspense
+            {/* <Suspense
               fallback={
                 <p className="h-48 text-xl font-semibold text-center text-white">
                   Loading...
                 </p>
               }
-            >
+            > */}
+            {loading ? (
+              <div className="w-full flex flex-row justify-around text-center ">
+                <MutatingDots
+                  visible={true}
+                  height="110"
+                  width="110"
+                  color="#4fa94d"
+                  secondaryColor="#4fa94d"
+                  radius="15"
+                  ariaLabel="mutating-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              </div>
+            ) : (
               <PostList
                 posts={posts}
                 currUserId={currUserId}
                 setPosts={setPosts}
               />
-            </Suspense>
+            )}
+            {/* </Suspense> */}
           </section>
         </div>
         <Footer />
