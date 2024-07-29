@@ -77,6 +77,7 @@ export default function Newpassword() {
             <div className="md:shrink-0">
               <img
                 className="h-48 w-full object-cover md:h-full "
+                src={im}
                 alt="Basketball Illusion"
               />
             </div>
