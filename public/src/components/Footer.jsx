@@ -74,7 +74,7 @@ const Footer = () => {
           <div className="flex flex-row space-x-4">
             <p className="align-bottom">Fork us on Github:</p>
             <a
-              href="https://github.com/RajdeepTiwari-24/LNM-Q_1.2"
+              href="https://github.com/Tushars815/LNM-Q_v1.3"
               target="_blank"
               className="inline-block"
             >
